@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Xmpp.Core.Net;
 
 namespace Argot;
 
@@ -19,6 +20,7 @@ public static class Argot
 		builder.Logging.AddDebug();
 #endif
 
+		builder.Services.AddSingleton<IXmppClient, XmppClient>();
 		return builder.Build();
 	}
 }
