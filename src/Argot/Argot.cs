@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Argot.Common.Settings;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Argot;
 
@@ -18,6 +20,10 @@ public static class Argot
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+
+		builder.Services.AddSingleton<IPreferences>(Preferences.Default);
+		builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
+		builder.Services.AddSingleton<ISettingsService, SettingsService>();
 
 		return builder.Build();
 	}

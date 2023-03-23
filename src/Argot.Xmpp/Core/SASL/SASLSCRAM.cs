@@ -50,13 +50,13 @@ public class SASLSCRAM : SASLHandler
         var iters = int.Parse(parts["i"]);
         var saltedPassword = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(Password),
             Convert.FromBase64String(parts["s"]),
-            iters).GetBytes(20);
+            iters, HashAlgorithmName.SHA512).GetBytes(20);
         var hmac1 = new HMACSHA1(saltedPassword);
         var clientKey = hmac1.ComputeHash(Encoding.UTF8.GetBytes("Client Key"));
         var clientFinalMessageWithoutProof = string.Format("c={0},r={1}", "biws", parts["r"]);
         var authMessage = string.Format("{0},{1},{2}", _clientFirstMessageBare, serverResponse,
             clientFinalMessageWithoutProof);
-        var hmac2 = new HMACSHA1(SHA1.Create().ComputeHash(clientKey));
+        var hmac2 = new HMACSHA1(SHA1.HashData(clientKey));
         var clientSignature = hmac2.ComputeHash(Encoding.UTF8.GetBytes(authMessage));
         var clientProof = clientKey.Zip(clientSignature, (x, y) => (byte)(x ^ y)).ToArray();
         var serverKey = new HMACSHA1(saltedPassword).ComputeHash(Encoding.UTF8.GetBytes("Server Key"));
