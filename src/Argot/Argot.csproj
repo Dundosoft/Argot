@@ -15,7 +15,7 @@
 		<ApplicationTitle>Argot</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.argot</ApplicationId>
+		<ApplicationId>com.dundosoft.argot</ApplicationId>
 		<ApplicationIdGuid>8153e548-8e39-478c-bdc2-d94559563133</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -58,7 +58,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Xmpp\Xmpp.csproj" />
+	  <ProjectReference Include="..\Argot.Xmpp\Argot.XMPP.csproj" />
 	</ItemGroup>
 
 </Project>
